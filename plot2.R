@@ -1,8 +1,9 @@
 # Loading and Preparing Data
 h_pow_df<-read.table("household_power_consumption.txt",
-                     sep = ";",stringsAsFactors = FALSE,
-                     na.strings = "?",header = TRUE
-)
+                     sep = ";",
+                     stringsAsFactors = FALSE,
+                     na.strings = "?",
+                     header = TRUE )
 # Subset for the 2 days we are interested in
 h_pow_sub <- subset(h_pow_df,
                     as.Date(h_pow_df$Date,"%d/%m/%Y") >= as.Date("2007-02-01","%Y-%m-%d") 
@@ -17,7 +18,8 @@ h_pow_sub$DateTime<-strptime(h_pow_sub$DateTime,"%d/%m/%Y %H:%M:%S")
 png(filename = "plot2.png", width = 480, height = 480)
 
 ### Plot 2
-plot(x = h_pow_sub$DateTime,y = h_pow_sub$Global_active_power,
+plot(x = h_pow_sub$DateTime,
+     y = h_pow_sub$Global_active_power,
      type = "l",
      ylab = "Global Active Power (kilowatts)",
      xlab = "")
