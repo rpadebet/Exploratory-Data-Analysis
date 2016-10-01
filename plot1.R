@@ -1,32 +1,18 @@
+# Load the data
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC <- readRDS("Source_Classification_Code.rds")
 
-# Loading and Preparing Data
-h_pow_df<-read.table("household_power_consumption.txt",
-                     sep = ";",
-                     stringsAsFactors = FALSE,
-                     na.strings = "?",
-                     header = TRUE)
-# Subset for the 2 days we are interested in
-h_pow_sub <- subset(h_pow_df,
-                    as.Date(h_pow_df$Date,"%d/%m/%Y") >= as.Date("2007-02-01","%Y-%m-%d") 
-                    &
-                    as.Date(h_pow_df$Date,"%d/%m/%Y") <= as.Date("2007-02-02","%Y-%m-%d") )
-# Create a new datetime column to plot against
-h_pow_sub$DateTime <- paste(h_pow_sub$Date ,h_pow_sub$Time)
-# Convert the date time column to POSIXlt class
-h_pow_sub$DateTime<-strptime(h_pow_sub$DateTime,"%d/%m/%Y %H:%M:%S")
+head(NEI)
+head(SCC)
 
-# Opening PNG File
-png(filename = "plot1.png", width = 480, height = 480)
-
-### Plot 1
-hist(h_pow_sub$Global_active_power,
-     col = "red",
-     xlab = "Global Active Power (kilowatts)",
-     main = "Global Active Power")
+# Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? 
+# Using the base plotting system, make a plot showing the total PM2.5 emission 
+#            from all sources for each of the years 1999, 2002, 2005, and 2008.
 
 
-dev.off()
+pm_tot <- aggregate(NEI$Emissions, by = list(Year = NEI$year), FUN = sum )
+names(pm_tot)<- c("Year","Total.Emissions")
 
-
-
-
+plot(pm_tot$Year,pm_tot$Total.Emissions, type = 'l',lwd=2, xlab = "Year", ylab = "Total Emissions", col= "green")
+points(pm_tot$Year,pm_tot$Total.Emissions,pch=24,col="red")
+title("Trend of Total Emissions")
