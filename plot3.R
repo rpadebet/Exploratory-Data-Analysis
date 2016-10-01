@@ -4,7 +4,11 @@
 # Which have seen increases in emissions from 1999–2008? 
 # Use the ggplot2 plotting system to make a plot answer this question.
 
+# Loading libraries
 library(ggplot2)
+
+# Load the data
+NEI <- readRDS("summarySCC_PM25.rds")
 
 # Subsetting the data
 pm_balt <- NEI[NEI$fips == "24510",]

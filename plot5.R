@@ -1,10 +1,14 @@
 
 # How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
 
+# Load the data
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC <- readRDS("Source_Classification_Code.rds")
+
+# Creating and index of relevant sources from SCC
 mvRIdx <- grep(pattern = "Road",SCC$EI.Sector,value = FALSE,fixed = TRUE)
 mvMIdx <- grep(pattern = "Mobile",SCC$EI.Sector,value = FALSE,fixed = TRUE)
 mvIdx <-intersect(mvRIdx,mvMIdx)
-View(SCC[mvIdx,])
 SCC_mv <- as.character(SCC[mvIdx,1])
 
 # Subsetting the data

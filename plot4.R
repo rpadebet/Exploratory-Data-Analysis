@@ -1,7 +1,11 @@
 
 # Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
 
-head(SCC)
+# Load the data
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC <- readRDS("Source_Classification_Code.rds")
+
+# Creating the relevant index for Coal sources
 coalIdx <- grep(pattern = "Coal",SCC$EI.Sector,value = FALSE,fixed = TRUE)
 SCC_coal <- as.character(SCC[coalIdx,1 ])
 
